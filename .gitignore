@@ -1,3 +1,6 @@
 node_modules/
 .next/
 notes/*.md
+*.gz
+*.zip
+share/
