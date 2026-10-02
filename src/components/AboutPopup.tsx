@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import packageJson from "../../package.json";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface Props {
   onClose: () => void;
 }
 
 export function AboutPopup({ onClose }: Props) {
+  const { t } = useSettings();
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export function AboutPopup({ onClose }: Props) {
         </div>
 
         <p style={{ fontSize: "13px", color: "var(--text-secondary)", margin: 0, lineHeight: 1.6 }}>
-          KaTeX数式対応のMarkdownエディタ
+          {t.topview.description}
         </p>
 
         <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: 0 }} />

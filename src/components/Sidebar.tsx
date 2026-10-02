@@ -28,7 +28,7 @@ function formatDate(iso: string) {
 }
 
 export function Sidebar({ currentFile, onSelect, onNew, refreshTrigger }: Props) {
-  const { settings } = useSettings();
+  const { settings, t } = useSettings();
   const [files, setFiles] = useState<FileEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +50,7 @@ export function Sidebar({ currentFile, onSelect, onNew, refreshTrigger }: Props)
 
   const handleDelete = async (e: React.MouseEvent, name: string) => {
     e.stopPropagation();
-    if (!confirm(`"${name}" を削除しますか？`)) return;
+    if (!confirm(`"${name}" ${t.topview.confirmDelete}`)) return;
     await fetch(`/api/files/${encodeURIComponent(name)}`, { method: "DELETE" });
     fetchFiles(true);
   };
@@ -71,7 +71,7 @@ export function Sidebar({ currentFile, onSelect, onNew, refreshTrigger }: Props)
         <span style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>
           Notes
         </span>
-        <button onClick={onNew} title="新規ノート" style={{
+        <button onClick={onNew} title={t.tooltip.onNew} style={{
           background: "none", border: "none", cursor: "pointer",
           color: "var(--text-muted)", padding: "1px", borderRadius: "4px",
           display: "flex", alignItems: "center", transition: "color 0.15s",
@@ -87,7 +87,9 @@ export function Sidebar({ currentFile, onSelect, onNew, refreshTrigger }: Props)
           <div style={{ padding: "16px 12px", fontSize: "12px", color: "var(--text-muted)" }}>読み込み中…</div>
         ) : files.length === 0 ? (
           <div style={{ padding: "16px 12px", fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.6 }}>
-            ノートがありません。<br />「+」で作成してください。
+            {t.topview.createNote1}
+            <br />
+            {t.topview.createNote2}
           </div>
         ) : (
           files.map((f) => (
@@ -115,7 +117,7 @@ export function Sidebar({ currentFile, onSelect, onNew, refreshTrigger }: Props)
                 overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", paddingRight: "18px",
               }}>{f.name}</span>
               <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>{formatDate(f.updatedAt)}</span>
-              <button className="delete-btn" onClick={(e) => handleDelete(e, f.name)} title="削除"
+              <button className="delete-btn" onClick={(e) => handleDelete(e, f.name)} title={t.tooltip.delete}
                 style={{
                   position: "absolute", top: "8px", right: "8px",
                   background: "none", border: "none", cursor: "pointer",

@@ -39,7 +39,7 @@ function generateFilename(): string {
 }
 
 export function DesktopView() {
-  const { settings } = useSettings();
+  const { settings, t } = useSettings();
   const [content, setContent] = useState<string>("");
   const [filename, setFilename] = useState<string | null>(null);
   const [saved, setSaved] = useState(true);
@@ -95,7 +95,7 @@ export function DesktopView() {
   }, []);
 
   const handleNew = useCallback(async () => {
-    if (!saved && !confirm("保存されていない変更があります。新規作成しますか？")) return;
+    if (!saved && !confirm(t.topview.confirmNew)) return;
     const name = generateFilename();
     await fetch("/api/files", {
       method: "POST",
@@ -147,7 +147,7 @@ export function DesktopView() {
   }, []);
 
   const handleClear = useCallback(() => {
-    if (!confirm("すべての内容を削除しますか？")) return;
+    if (!confirm(t.topview.confirmClear)) return;
     handleChange("");
   }, [handleChange]);
 

@@ -5,6 +5,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface Props {
   filename: string | null;
@@ -25,6 +26,7 @@ export function Toolbar({
   filename, wordCount, charCount, saved, sidebarOpen,
   onToggleSidebar, onAbout, onSettings, onOpen, onSave, onClear, onRenameFile,
 }: Props) {
+  const { t } = useSettings();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -61,13 +63,13 @@ export function Toolbar({
       flexShrink: 0, userSelect: "none",
     }}>
       {/* Sidebar toggle */}
-      <button onClick={onToggleSidebar} title={sidebarOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
+      <button onClick={onToggleSidebar} title={sidebarOpen ? t.tooltip.sidebarToClose : t.tooltip.sidebarToOpen}
         style={{ ...iconBtnStyle, color: sidebarOpen ? "var(--accent)" : "var(--text-muted)" }}>
         {sidebarOpen ? <MenuOpenIcon sx={{ fontSize: 20 }} /> : <MenuIcon sx={{ fontSize: 20 }} />}
       </button>
 
       {/* Logo */}
-      <button onClick={onAbout} title="バージョン情報" style={{
+      <button onClick={onAbout} title={t.tooltip.versionInfo} style={{
         background: "none", border: "none", cursor: "pointer",
         fontWeight: 700, fontSize: "16px", letterSpacing: "-0.04em",
         color: "var(--text-primary)", margin: "0 6px", padding: "2px 4px",
@@ -81,9 +83,9 @@ export function Toolbar({
       <Sep />
 
       {/* File actions */}
-      <Btn onClick={onOpen} title="ローカルの .md ファイルを読み込む">Open</Btn>
-      <Btn onClick={onSave} disabled={!hasFile} accent title="現在のファイルをダウンロード">Download</Btn>
-      <Btn onClick={onClear} disabled={!hasFile} title="内容をすべて削除">Clear</Btn>
+      <Btn onClick={onOpen} title={t.tooltip.onOpen}>Open</Btn>
+      <Btn onClick={onSave} disabled={!hasFile} accent title={t.tooltip.onSave}>Download</Btn>
+      <Btn onClick={onClear} disabled={!hasFile} title={t.tooltip.onClear}>Clear</Btn>
 
       <Sep />
 
@@ -115,7 +117,7 @@ export function Toolbar({
                 transition: "color 0.3s", flexShrink: 0 }}>
                 {saved ? "✓" : "…"}
               </span>
-              <button onClick={startEdit} title="ファイル名を変更" style={{
+              <button onClick={startEdit} title={t.tooltip.changeFileName} style={{
                 ...iconBtnStyle, padding: "1px", flexShrink: 0, color: "var(--text-muted)",
               }}>
                 <EditIcon sx={{ fontSize: 14 }} />
@@ -125,7 +127,7 @@ export function Toolbar({
         </div>
       ) : (
         <span style={{ fontSize: "12px", color: "var(--text-muted)", padding: "0 4px" }}>
-          ノートを選択してください
+          {t.topview.selectNote}
         </span>
       )}
 
@@ -139,7 +141,7 @@ export function Toolbar({
       <Sep />
 
       {/* Settings */}
-      <button onClick={onSettings} title="設定"
+      <button onClick={onSettings} title={t.tooltip.settings}
         style={{ ...iconBtnStyle, color: "var(--text-muted)" }}
         onMouseEnter={e => (e.currentTarget.style.color = "var(--accent)")}
         onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}>

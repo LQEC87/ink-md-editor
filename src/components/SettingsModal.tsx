@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function SettingsModal({ onClose }: Props) {
-  const { settings, updateSetting } = useSettings();
+  const { settings, updateSetting, t } = useSettings();
   const { theme, setTheme } = useTheme();
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -42,16 +42,23 @@ export function SettingsModal({ onClose }: Props) {
       }}>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontWeight: 700, fontSize: "16px", color: "var(--text-primary)" }}>設定</span>
+          <span style={{ fontWeight: 700, fontSize: "16px", color: "var(--text-primary)" }}>
+            {t.settings.title}
+          </span>
           <button onClick={onClose} style={closeBtnStyle}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--text-primary)")}
             onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}>✕</button>
         </div>
 
         {/* ── 表示 ── */}
-        <Section title="表示">
+        <Section title={t.settings.indicates}>
+          {/* Language */}
+          <SettingRow label={t.settings.languages} sub="日本語/English">
+            <Toggle enabled={settings.editorLanguage}
+              onToggle={() => updateSetting("editorLanguage", !settings.editorLanguage)} />
+          </SettingRow>
           {/* Theme */}
-          <SettingRow label="テーマ">
+          <SettingRow label={t.settings.theme}>
             <div style={{ display: "flex", gap: "6px" }}>
               {(["system", "light", "dark"] as Theme[]).map((t) => (
                 <button key={t} onClick={() => setTheme(t)} style={{
@@ -68,50 +75,50 @@ export function SettingsModal({ onClose }: Props) {
           </SettingRow>
 
           {/* Editor font size */}
-          <SettingRow label="エディタ文字サイズ" sub={`${settings.editorFontSize}px`}>
+          <SettingRow label={t.settings.editorFontSize} sub={`${settings.editorFontSize}px`}>
             <input type="range" min={11} max={22} value={settings.editorFontSize}
               onChange={e => updateSetting("editorFontSize", Number(e.target.value))}
               style={{ width: "120px", accentColor: "var(--accent)" }} />
           </SettingRow>
 
           {/* Preview font size */}
-          <SettingRow label="プレビュー文字サイズ" sub={`${settings.previewFontSize}px`}>
+          <SettingRow label={t.settings.previewFontSize} sub={`${settings.previewFontSize}px`}>
             <input type="range" min={12} max={22} value={settings.previewFontSize}
               onChange={e => updateSetting("previewFontSize", Number(e.target.value))}
               style={{ width: "120px", accentColor: "var(--accent)" }} />
           </SettingRow>
 
           {/* Line numbers */}
-          <SettingRow label="行番号を表示">
+          <SettingRow label={t.settings.showLineNumbers}>
             <Toggle enabled={settings.showLineNumbers}
               onToggle={() => updateSetting("showLineNumbers", !settings.showLineNumbers)} />
           </SettingRow>
         </Section>
 
         {/* ── 編集 ── */}
-        <Section title="編集">
+        <Section title={t.settings.editing}>
           {/* Breaks */}
-          <SettingRow label="改行をそのまま反映" sub="行末の \ なし・スペース2つでも改行可">
+          <SettingRow label={t.settings.breaksEnabled} sub="行末の \ なし・スペース2つでも改行可">
             <Toggle enabled={settings.breaksEnabled}
               onToggle={() => updateSetting("breaksEnabled", !settings.breaksEnabled)} />
           </SettingRow>
 
           {/* Auto close brackets */}
-          <SettingRow label="括弧を自動で閉じる">
+          <SettingRow label={t.settings.autoCloseBrackets}>
             <Toggle enabled={settings.autoCloseBrackets}
               onToggle={() => updateSetting("autoCloseBrackets", !settings.autoCloseBrackets)} />
           </SettingRow>
 
           {/* Line wrapping */}
-          <SettingRow label="行の折り返し">
+          <SettingRow label={t.settings.lineWrapping}>
             <Toggle enabled={settings.lineWrapping}
               onToggle={() => updateSetting("lineWrapping", !settings.lineWrapping)} />
           </SettingRow>
         </Section>
 
         {/* ── 保存 ── */}
-        <Section title="保存">
-          <SettingRow label="自動保存の遅延" sub={`${settings.autoSaveDelay}ms`}>
+        <Section title={t.settings.save}>
+          <SettingRow label={t.settings.autoSaveDelay} sub={`${settings.autoSaveDelay}ms`}>
             <input type="range" min={300} max={3000} step={100} value={settings.autoSaveDelay}
               onChange={e => updateSetting("autoSaveDelay", Number(e.target.value))}
               style={{ width: "120px", accentColor: "var(--accent)" }} />
@@ -119,14 +126,14 @@ export function SettingsModal({ onClose }: Props) {
         </Section>
 
         {/* ── レイアウト ── */}
-        <Section title="レイアウト">
-          <SettingRow label="デフォルトのペイン比率" sub={`${settings.defaultSplitPercent}%`}>
+        <Section title={t.settings.layout}>
+          <SettingRow label={t.settings.defaultSplitPercent} sub={`${settings.defaultSplitPercent}%`}>
             <input type="range" min={20} max={80} value={settings.defaultSplitPercent}
               onChange={e => updateSetting("defaultSplitPercent", Number(e.target.value))}
               style={{ width: "120px", accentColor: "var(--accent)" }} />
           </SettingRow>
 
-          <SettingRow label="サイドバーの幅" sub={`${settings.sidebarWidth}px`}>
+          <SettingRow label={t.settings.sidebarWidth} sub={`${settings.sidebarWidth}px`}>
             <input type="range" min={160} max={340} step={10} value={settings.sidebarWidth}
               onChange={e => updateSetting("sidebarWidth", Number(e.target.value))}
               style={{ width: "120px", accentColor: "var(--accent)" }} />

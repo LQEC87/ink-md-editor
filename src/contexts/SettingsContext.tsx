@@ -1,6 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { ja } from "@/dictionaries/ja";
+import { en } from "@/dictionaries/en";
+
+type Dictionary = typeof ja;
+const dictionaries = { ja, en };
 
 export interface AppSettings {
   editorFontSize: number;
@@ -12,6 +17,7 @@ export interface AppSettings {
   autoSaveDelay: number;
   defaultSplitPercent: number;
   sidebarWidth: number;
+  editorLanguage: boolean;
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -24,16 +30,19 @@ export const DEFAULT_SETTINGS: AppSettings = {
   autoSaveDelay: 800,
   defaultSplitPercent: 50,
   sidebarWidth: 220,
+  editorLanguage: false,
 };
 
 interface SettingsContextType {
   settings: AppSettings;
   updateSetting: <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => void;
+  t: Dictionary;
 }
 
 const SettingsContext = createContext<SettingsContextType>({
   settings: DEFAULT_SETTINGS,
   updateSetting: () => {},
+  t: dictionaries.ja,
 });
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -57,7 +66,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSetting }}>
+    <SettingsContext.Provider value={{ settings, updateSetting, t: settings.editorLanguage ? dictionaries.en : dictionaries.ja }}>
       {children}
     </SettingsContext.Provider>
   );

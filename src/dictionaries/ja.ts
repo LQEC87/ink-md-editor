@@ -1,0 +1,41 @@
+export const ja = {
+    "settings": {
+        "title": "設定",
+        "indicates": "表示",
+        "languages": "言語(再起動してください)",
+        "theme": "テーマ",
+        "editorFontSize": "エディタ文字サイズ",
+        "previewFontSize": "プレビュー文字サイズ",
+        "showLineNumbers": "行番号を表示",
+        "editing": "編集",
+        "breaksEnabled": "改行をそのまま反映",
+        "autoCloseBrackets": "括弧を自動で閉じる",
+        "lineWrapping": "行の折り返し",
+        "save": "保存",
+        "autoSaveDelay": "自動保存の遅延",
+        "layout": "レイアウト",
+        "defaultSplitPercent": "デフォルトのペイン比率",
+        "sidebarWidth": "サイドバーの幅"
+    },
+    "topview": {
+        "description": "KaTeX数式対応のMarkdownエディタ",
+        "selectNote": "ノートを選択してください",
+        "createNote1": "ノートがありません。",
+        "createNote2": "「+」で作成してください。",
+        "confirmNew": "保存されていない変更があります。新規作成しますか？",
+        "confirmClear": "すべての内容を削除しますか？",
+        "confirmDelete": "を削除しますか？",
+    },
+    "tooltip": {
+        "sidebarToClose": "サイドバーを閉じる",
+        "sidebarToOpen": "サイドバーを開く",
+        "versionInfo": "バージョン情報",
+        "onOpen": "ローカルの .md ファイルを読み込む",
+        "onSave": "現在のファイルをダウンロード",
+        "onClear": "内容をすべて削除",
+        "changeFileName": "ファイル名を変更",
+        "settings": "設定",
+        "onNew": "新規ノート",
+        "delete": "削除",
+    }
+}

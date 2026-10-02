@@ -3,9 +3,9 @@
 export function MobileView() {
   return (
     <div style={{
-      height: "100vh", display: "flex", flexDirection: "column",
+      height: "100lvh", display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
-      background: "var(--bg-app)", padding: "32px 24px", textAlign: "center", gap: "16px",
+      background: "var(--bg-app)", padding: "0", textAlign: "center", gap: "16px",
     }}>
       <span style={{ fontSize: "40px" }}>🖥️</span>
       <h1 style={{ fontSize: "20px", fontWeight: 700, color: "var(--text-primary)", margin: 0, letterSpacing: "-0.02em" }}>
